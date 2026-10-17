@@ -12,7 +12,11 @@ return {
       -- insert_at_start = true,
       -- …etc.
 			animation = false,
-			insert_at_start = false,
+			sidebar_filetypes = {
+				-- Use the default values: {event = 'BufWinLeave', text = '', align = 'left'}
+				-- NvimTree = true,
+			 	-- ['neo-tree'] = {event = 'BufWipeout'},
+			},
     },
     lazy = false,
     keys = {

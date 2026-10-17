@@ -18,6 +18,15 @@ return {
 		},
 		keys = {
 			{'<leader>ff', function() require('telescope.builtin').find_files() end },
+			{
+        "<leader>fd",
+        function()
+          require("telescope.builtin").find_files({
+            prompt_title = "Find Directories",
+            find_command = { "fd", "--type", "d", "--follow" },
+          })
+        end,
+      },
 		},
-	}
+	},
 }

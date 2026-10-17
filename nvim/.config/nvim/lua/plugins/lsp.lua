@@ -11,6 +11,10 @@ return {
 				end,
 			},
 		},
+    keys = {
+			{'<F2>', function() vim.lsp.buf.rename() end },
+			{'<F3>', function() vim.lsp.buf.format() end },
+    },
 		opts = {
 			ensure_installed = { "lua_ls", "csharp_ls" },
 		},
