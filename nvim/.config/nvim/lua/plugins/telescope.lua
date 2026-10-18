@@ -32,7 +32,7 @@ return {
 				function()
 					require("telescope.builtin").find_files({
 						prompt_title = "Find Directories",
-						find_command = { "fd", "--type", "d", "--follow" },
+						find_command = { "fd", "--type", "d", "--max-depth", "6", "--follow"},
 					})
 				end,
 			},
