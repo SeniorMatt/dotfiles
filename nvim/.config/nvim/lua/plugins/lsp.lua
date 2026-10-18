@@ -18,7 +18,7 @@ return {
 			{'gd', function() vim.lsp.buf.definition() end },
     },
 		opts = {
-			ensure_installed = { "lua_ls", "csharp_ls", "qmlls" },
+			ensure_installed = { "lua_ls", "csharp_ls", "qmlls", "clangd" },
 		},
 	},
 }
