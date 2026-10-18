@@ -1,3 +1,4 @@
+-- Plugin for quick file / directories switch.
 return {
 	{
 		'nvim-telescope/telescope.nvim',

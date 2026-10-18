@@ -1,3 +1,4 @@
+-- Lsp configuration.
 return {
 	{
 		"mason-org/mason-lspconfig.nvim",
