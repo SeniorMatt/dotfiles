@@ -1,4 +1,4 @@
--- Plugin for file manager.
+-- Plugin for file manager
 return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",

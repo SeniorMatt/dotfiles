@@ -1,4 +1,4 @@
--- Markdown plugin.
+-- Markdown plugin
 return {
 	{
 		'MeanderingProgrammer/render-markdown.nvim',

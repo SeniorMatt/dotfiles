@@ -1,5 +1,5 @@
 return {
-	-- Plugin for snippets.
+	-- Plugin for snippets
 	{
 		'saghen/blink.cmp',
 		lazy = false,
@@ -91,7 +91,7 @@ return {
 		},
 		opts_extend = { "sources.default" }
 	},
-	-- Plugin for automatic brackets.
+	-- Plugin for automatic brackets
 	{
 		'saghen/blink.pairs',
 		dependencies = 'saghen/blink.lib',

@@ -1,4 +1,4 @@
---- Plugin for Tabs.
+--- Plugin for Tabs
 return {
 	{
 		'romgrk/barbar.nvim',

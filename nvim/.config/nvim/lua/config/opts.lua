@@ -15,3 +15,6 @@ vim.diagnostic.config({
 		source = true,
 	},
 })
+
+-- Change the colorscheme.
+vim.cmd("colorscheme gruvbox");
