@@ -1,11 +1,12 @@
 return {
 	{
-    'nvim-telescope/telescope.nvim', version = '*',
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        -- optional but recommended
-        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    },
+		'nvim-telescope/telescope.nvim',
+		version = '*',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			-- optional but recommended
+			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+		},
 		opts = {
 			defaults = {
 				mappings = {
@@ -14,19 +15,27 @@ return {
 						["<C-k>"] = "move_selection_previous",
 					},
 				},
+				file_ignore_patterns = {
+					"%.uid",
+				},
+			},
+			pickers = {
+				find_files = {
+					hidden = true,
+				},
 			},
 		},
 		keys = {
-			{'<leader>ff', function() require('telescope.builtin').find_files() end },
+			{ '<leader>ff', function() require('telescope.builtin').find_files() end },
 			{
-        "<leader>fd",
-        function()
-          require("telescope.builtin").find_files({
-            prompt_title = "Find Directories",
-            find_command = { "fd", "--type", "d", "--follow" },
-          })
-        end,
-      },
+				"<leader>fd",
+				function()
+					require("telescope.builtin").find_files({
+						prompt_title = "Find Directories",
+						find_command = { "fd", "--type", "d", "--follow" },
+					})
+				end,
+			},
 		},
 	},
 }

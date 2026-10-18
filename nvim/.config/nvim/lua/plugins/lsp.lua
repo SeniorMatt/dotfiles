@@ -11,12 +11,14 @@ return {
 				end,
 			},
 		},
+		lazy = false,
     keys = {
 			{'<F2>', function() vim.lsp.buf.rename() end },
 			{'<F3>', function() vim.lsp.buf.format() end },
+			{'gd', function() vim.lsp.buf.definition() end },
     },
 		opts = {
-			ensure_installed = { "lua_ls", "csharp_ls" },
+			ensure_installed = { "lua_ls", "csharp_ls", "qmlls" },
 		},
 	},
 }
