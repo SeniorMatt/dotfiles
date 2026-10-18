@@ -9,4 +9,4 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 -- Space Y copies in to the clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", '"+y', { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { noremap = true, silent = true })
