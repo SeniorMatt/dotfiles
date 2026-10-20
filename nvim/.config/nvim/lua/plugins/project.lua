@@ -1,0 +1,13 @@
+return {
+	{
+		'DrKJeff16/project.nvim',
+		-- dependencies = { -- OPTIONAL. Choose any of the following
+		-- 	'nvim-telescope/telescope.nvim',
+		-- 	'wsdjeg/picker.nvim',
+		-- 	'folke/snacks.nvim',
+		-- 	'ibhagwan/fzf-lua',
+		-- 	'xieyonn/spinner.nvim',
+		-- },
+		opts = {},
+	}
+}

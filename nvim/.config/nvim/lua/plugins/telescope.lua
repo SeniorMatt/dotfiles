@@ -9,6 +9,10 @@ return {
 			-- optional but recommended
 			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 		},
+		config = function(_, opts)
+			require('telescope').setup(opts);
+			require('telescope').load_extension('projects')
+		end,
 		opts = {
 			defaults = {
 				mappings = {
@@ -38,6 +42,7 @@ return {
 					})
 				end,
 			},
+			{ "<leader>fp", "<cmd>Telescope projects<cr>" },
 		},
 	},
 }
