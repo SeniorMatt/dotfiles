@@ -12,6 +12,7 @@ return {
 		config = function(_, opts)
 			require('telescope').setup(opts);
 			require('telescope').load_extension('projects')
+			require('telescope').load_extension('fzf')
 		end,
 		opts = {
 			defaults = {
@@ -30,6 +31,14 @@ return {
 					hidden = true,
 				},
 			},
+			extensions = {
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case", -- "Multi" matches case-sensitively, "multi" matches everything
+				},
+			},
 		},
 		keys = {
 			{ '<leader>ff', function() require('telescope.builtin').find_files() end },
@@ -43,6 +52,9 @@ return {
 				end,
 			},
 			{ "<leader>fp", "<cmd>Telescope projects<cr>" },
+			{ "<leader>fr", function() require("telescope.builtin").lsp_references() end },
+			-- Code action
+			{ "<leader>ca", function() vim.lsp.buf.code_action() end,                    mode = { "n", "v" } },
 		},
 	},
 }

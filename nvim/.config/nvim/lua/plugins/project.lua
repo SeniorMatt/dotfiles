@@ -8,6 +8,8 @@ return {
 		-- 	'ibhagwan/fzf-lua',
 		-- 	'xieyonn/spinner.nvim',
 		-- },
-		opts = {},
+		opts = {
+			show_hidden = true,
+		},
 	}
 }
