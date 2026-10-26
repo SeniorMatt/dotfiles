@@ -10,6 +10,8 @@
 --     |[]      + [  → [|]
 --     |<T>     + <  → <|T>    (only when it looks like a generic, not a comparison)
 --   > steps over an existing > that closes a generic, e.g. List<int|> → List<int>|
+--   ( [ { only auto-close before whitespace, end of line or punctuation (like VS Code):
+--     "|{name}"  + (  → "(|{name}"   instead of "()|{name}"
 
 local function feed(keys)
 	vim.api.nvim_feedkeys(vim.keycode(keys), 'n', false)
@@ -24,6 +26,14 @@ local MARKUP = {
 -- What can sit between generic angle brackets: Dictionary<string, List<int>?>
 -- Comparisons almost always contain other characters (&&, ||, ;, parentheses, ...)
 local GENERIC_INNER = '[%w_%.,%s%[%]%?<>]*'
+
+-- Like VS Code's autoCloseBefore: only auto-close when the next character is
+-- end of line, whitespace, a closing bracket, punctuation or a quote
+local function can_autoclose()
+	local col = vim.api.nvim_win_get_cursor(0)[2]
+	local next_char = vim.api.nvim_get_current_line():sub(col + 1, col + 1)
+	return next_char == '' or next_char:match('[%s%)%]%};:,%.=>"\'`]') ~= nil
+end
 
 -- Cursor is right before a "<...>" that looks like a generic
 local function generic_opens_here()
@@ -89,12 +99,24 @@ local function open_parens()
 	end
 end
 
+-- For { and [ : step over an existing one, or type it without a closing pair
+-- when the next character isn't a "safe" one; otherwise let blink.pairs close it
+local function open_bracket(char)
+	if step_over(char) then return true end
+	if not can_autoclose() then
+		feed(char)
+		return true
+	end
+	return nil
+end
+
 local function add_brackets(generic)
 	local col = vim.api.nvim_win_get_cursor(0)[2]
 	local line = vim.api.nvim_get_current_line()
 	local before = line:sub(1, col):gsub('[%w_]*$', '')
 	local after = line:sub(col + 1)
-	if after:match('^[%(<]')                     -- brackets already there
+	if not line:sub(col, col):match('[%w_]')   -- completion inserted its own brackets, e.g. "_Ready()"
+		or after:match('^[%(<]')                  -- brackets already there
 		or before:match('[%+%-]=%s*$')            -- Event += Handler
 		or before:match('nameof%(%s*$')           -- nameof(Method)
 		or before:match('Callable%.From%(%s*$')   -- Callable.From(Method)
@@ -136,8 +158,9 @@ return {
 		opts = {
 			keymap = {
 				preset = 'default',
-				["<Tab>"]   = { 'select_next', 'snippet_forward', 'fallback' },
-				["<S-Tab>"] = { 'select_prev', 'snippet_backward', 'fallback' },
+				-- Inside a snippet Tab jumps between placeholders; otherwise it moves through the menu
+				["<Tab>"]   = { 'snippet_forward', 'select_next', 'fallback' },
+				["<S-Tab>"] = { 'snippet_backward', 'select_prev', 'fallback' },
 				["<C-j>"]   = { 'select_next', 'fallback' },
 				["<C-k>"]   = { 'select_prev', 'fallback' },
 
@@ -145,6 +168,8 @@ return {
 					function(cmp)
 						local item = cs_item(cmp, { 'Method', 'Function' })
 						if not item then return end -- not a C# method: normal accept
+						-- items like "_Ready()" (overrides) bring their own brackets: normal accept
+						if (item.label or ''):find('(', 1, true) then return end
 						cmp.accept({
 							callback = function()
 								local pos = vim.api.nvim_win_get_cursor(0)
@@ -173,12 +198,16 @@ return {
 							show_signature()
 							return true
 						end
+						if not can_autoclose() then
+							feed('(')
+							return true
+						end
 					end,
 					'fallback',
 				},
 
-				["{"] = { function() return step_over('{') or nil end, 'fallback' },
-				["["] = { function() return step_over('[') or nil end, 'fallback' },
+				["{"] = { function() return open_bracket('{') end, 'fallback' },
+				["["] = { function() return open_bracket('[') end, 'fallback' },
 
 				["<lt>"] = {
 					function(cmp)
