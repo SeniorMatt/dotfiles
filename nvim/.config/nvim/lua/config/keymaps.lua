@@ -4,6 +4,11 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
+local modes = { "i", "c" }
+vim.keymap.set(modes, "<C-h>", "<Left>")
+vim.keymap.set(modes, "<C-j>", "<Down>")
+vim.keymap.set(modes, "<C-k>", "<Up>")
+vim.keymap.set(modes, "<C-l>", "<Right>")
 
 -- Map Ctrl+C to behave like Esc
 vim.keymap.set("i", "<C-c>", "<Esc>")

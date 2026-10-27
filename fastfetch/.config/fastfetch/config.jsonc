@@ -29,6 +29,7 @@
         },
         "uptime",
 		{
+			// https://discuss.cachyos.org/t/fastfetch-add-os-age/5487/3
 			"key": "Age",
 			"type": "disk",
 			"keyColor": "97",
